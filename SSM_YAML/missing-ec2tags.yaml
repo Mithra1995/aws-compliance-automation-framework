@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "0.3",
+  "description": "Automation document to add missing EC2 tags via script",
+  "assumeRole": "{{ AutomationAssumeRole }}",
+  "parameters": {
+    "InstanceId": {
+      "type": "String",
+      "description": "The EC2 instance ID to tag"
+    },
+    "AutomationAssumeRole": {
+      "type": "String",
+      "description": "The IAM role assumed during automation"
+    }
+  },
+  "mainSteps": [
+    {
+      "description": "Adds missing tags to EC2 instance",
+      "name": "AddTagsStep",
+      "action": "aws:executeScript",
+      "isEnd": true,
+      "inputs": {
+        "Runtime": "python3.8",
+        "Handler": "main",
+        "Script": "def main(event, context):\n    import boto3\n    ec2 = boto3.client('ec2')\n    instance_id = event['InstanceId']\n    ec2.create_tags(Resources=[instance_id], Tags=[\n        {'Key': 'Environment', 'Value': 'Production'},\n        {'Key': 'Owner', 'Value': 'OpsTeam'}\n    ])\n    return {'status': 'success'}",
+        "InputPayload": {
+          "InstanceId": "{{ InstanceId }}"
+        }
+      }
+    }
+  ]
+}

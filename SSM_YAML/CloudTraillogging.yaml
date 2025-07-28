@@ -1,0 +1,19 @@
+schemaVersion: '0.3'
+description: Starts CloudTrail logging for a given trail name to remediate NON_COMPLIANT status detected by AWS Config.
+assumeRole: '{{ AutomationAssumeRole }}'
+parameters:
+  AutomationAssumeRole:
+    type: String
+    description: (Required) The ARN of the role that allows Automation to perform the actions.
+  TrailName:
+    type: String
+    description: (Required) The name of the CloudTrail trail to enable logging.
+mainSteps:
+  - description: Enables logging for the CloudTrail trail.
+    name: StartCloudTrailLogging
+    action: aws:executeAwsApi
+    isEnd: true
+    inputs:
+      Service: cloudtrail
+      Api: StartLogging
+      Name: '{{ TrailName }}'
