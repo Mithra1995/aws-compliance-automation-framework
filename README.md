@@ -68,12 +68,12 @@ To detect non-compliant AWS resources and automatically remediate them or log ac
 aws-compliance-automation-framework/
 │
 ├── Lambda_code/
-│   ├── cloudtrail_evaluator.py
-│   └── s3_public_access_logger.py
+│   ├── Cloudtrail.py
+│   └── S3-BPA.py
 │
 ├── SSM_YAML/
-│   ├── EnableCloudTrailLogging.yaml
-│   ├── RevokeOpenSSHAccess.yaml
-│   └── AddMissingEC2Tags.yaml
+│   ├── CloudTraillogging.yaml
+│   ├── SG-revoke-SSH.yaml
+│   └── missing-ec2tags.yaml
 │
 └── README.md
